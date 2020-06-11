@@ -140,10 +140,13 @@ router.post('/update-rankings', function(req, res, next) {
   if (req.body.rankEasyScore){
     players.findOne({name: req.body.login}).then(function(doc){
       if (doc){
-        console.log("user found - cannot continue")
-        doc.rankEasy = req.body.rankEasyScore
-        doc.save()
-        res.send([doc.rankEasy])
+        console.log("user found")
+        if (doc.rankEasy < req.body.rankEasyScore){
+          doc.rankEasy = req.body.rankEasyScore
+          doc.save()
+          res.send([doc.rankEasy])
+        }
+
       } else{
         console.log("No User Found- will continue with sign up",doc)
         // var hashedPassword = passwordHash.generate(req.body.pw);
