@@ -29,7 +29,6 @@ var players = mongoose.model("players", playerSchema)
 router.get('/', function(req, res, next) {
   players.find().then(function(doc){
     rankArray = []
-    console.log(doc)
     if (doc){
       for(let i =0;i<20;i++){
         rankArray.push({name:doc[i].name,rankEasy:doc[i].rankEasy,rankHard:doc[i].rankHard})
@@ -42,7 +41,6 @@ router.get('/', function(req, res, next) {
 router.get('/easy-rank', function(req, res, next) {
   players.find().sort({rankEasy : -1}).then(function(doc){
     rankArray = []
-    console.log(doc)
     if (doc){
       for(let i =0;i<20;i++){
         rankArray.push({name:doc[i].name,rankEasy:doc[i].rankEasy,rankHard:doc[i].rankHard})
@@ -55,7 +53,6 @@ router.get('/easy-rank', function(req, res, next) {
 router.get('/hard-rank', function(req, res, next) {
   players.find().sort({rankHard : -1}).then(function(doc){
     rankArray = []
-    console.log(doc)
     if (doc){
       for(let i =0;i<20;i++){
         rankArray.push({name:doc[i].name,rankEasy:doc[i].rankEasy,rankHard:doc[i].rankHard})
@@ -81,10 +78,10 @@ router.post('/sign-up', function(req, res, next) {
   console.log(req.body.login)
   players.findOne({name: req.body.login}).then(function(doc){
     if (doc){
-      console.log("user found - cannot continue", doc)
+      console.log("user found - cannot continue")
       res.send(["User Exists"])
     } else{
-      console.log("No User Found- will continue with sign up",doc)
+      console.log("No User Found- will continue with sign up")
       var hashedPassword = passwordHash.generate(req.body.pw);
       var newPlayer = new players({
         name: (req.body.login),
@@ -148,7 +145,7 @@ router.post('/update-rankings', function(req, res, next) {
         }
 
       } else{
-        console.log("No User Found- will continue with sign up",doc)
+        console.log("No User Found- will continue with sign up")
         // var hashedPassword = passwordHash.generate(req.body.pw);
         // var newPlayer = new players({
         //   email_address:"yank",
@@ -163,12 +160,14 @@ router.post('/update-rankings', function(req, res, next) {
   if (req.body.rankHardScore){
     players.findOne({name: req.body.login}).then(function(doc){
       if (doc){
-        console.log("user found - cannot continue")
+        if (doc.rankHard < req.body.rankHardScore){
+        console.log("user found")
         doc.rankHard = req.body.rankHardScore
         doc.save()
         res.send([doc.rankHard])
+        }
       } else{
-        console.log("No User Found- will continue with sign up",doc)
+        console.log("No User Found- will continue with sign up")
         // var hashedPassword = passwordHash.generate(req.body.pw);
         // var newPlayer = new players({
         //   email_address:"yank",
