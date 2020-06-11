@@ -47,7 +47,7 @@ router.get('/easy-rank', function(req, res, next) {
       }
     }
 
-    res.send(rankArray)
+    res.send([rankArray])
   })
 });
 router.get('/hard-rank', function(req, res, next) {
@@ -59,7 +59,7 @@ router.get('/hard-rank', function(req, res, next) {
       }
     }
 
-    res.send(rankArray)
+    res.send([rankArray])
   })
 });
 router.post('/find-ranking', function(req, res, next) {
