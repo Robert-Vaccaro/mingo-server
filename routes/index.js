@@ -65,7 +65,7 @@ router.get('/hard-rank', function(req, res, next) {
 router.post('/find-ranking', function(req, res, next) {
   players.findOne({name: req.body.login}).then(function(doc){
     if (doc){
-      res.send([doc.name,doc.rankEasy, doc.rankHard])
+      res.send([{name: doc.name,rankEasy:doc.rankEasy,rankHard:doc.rankHard}])
     } else{
       res.send(["User Not Found"])
     }
