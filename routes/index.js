@@ -85,7 +85,9 @@ router.post('/sign-up', function(req, res, next) {
       var hashedPassword = passwordHash.generate(req.body.pw);
       var newPlayer = new players({
         name: (req.body.login),
-        password: hashedPassword
+        password: hashedPassword,
+        rankEasy: 0,
+        rankHard: 0
         })
       newPlayer.save()
       res.send(["User Created"])
