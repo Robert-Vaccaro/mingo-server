@@ -42,7 +42,7 @@ router.get('/easy-rank', function(req, res, next) {
   players.find().sort({rankEasy : -1}).then(function(doc){
     rankArray = []
     if (doc){
-      for(let i =0;i<20;i++){
+      for(let i =0;i<doc.length;i++){
         rankArray.push({name:doc[i].name,rankEasy:doc[i].rankEasy,rankHard:doc[i].rankHard})
       }
     }
@@ -54,7 +54,7 @@ router.get('/hard-rank', function(req, res, next) {
   players.find().sort({rankHard : -1}).then(function(doc){
     rankArray = []
     if (doc){
-      for(let i =0;i<20;i++){
+      for(let i =0;i<doc.length;i++){
         rankArray.push({name:doc[i].name,rankEasy:doc[i].rankEasy,rankHard:doc[i].rankHard})
       }
     }
